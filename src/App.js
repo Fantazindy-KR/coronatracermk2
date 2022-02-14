@@ -9,11 +9,14 @@ import {
 import InfoBox from "./InfoBox";
 import "./App.css";
 import Map from "./Map";
+import Table from "./Table";
+import { sortData } from "./utill";
 
 function App() {
   const [countires, setCountires] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -32,6 +35,9 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
           }));
+
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountires(countires);
         });
     };
@@ -108,6 +114,7 @@ function App() {
         <CardContent>
           {/*Table*/}
           <h3>Live Cases by Country</h3>
+          <Table countries={tableData} />
           {/*Graph*/}
           <h3>Worldwide new cases</h3>
         </CardContent>
