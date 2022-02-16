@@ -67,9 +67,6 @@ function App() {
 
         setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
         setMapZoom(4);
-        console.log(data.countryInfo.lat);
-        console.log(data.countryInfo.long);
-        console.log(data.countryInfo);
       });
   };
 
@@ -99,6 +96,8 @@ function App() {
           {/*Infobox title=COVID recovered*/}
           {/*Infobox*/}
           <InfoBox
+            isRed
+            active={casesType === "cases"}
             onClick={(e) => setCasesType("cases")}
             title="Coronavirus cases"
             cases={prettyPrintStat(countryInfo.todayCases)}
@@ -106,6 +105,7 @@ function App() {
           />
 
           <InfoBox
+            active={casesType === "recovered"}
             onClick={(e) => setCasesType("recovered")}
             title="Recovered"
             cases={prettyPrintStat(countryInfo.todayRecovered)}
@@ -113,6 +113,8 @@ function App() {
           />
 
           <InfoBox
+            isRed
+            active={casesType === "deaths"}
             onClick={(e) => setCasesType("deaths")}
             title="Deaths"
             cases={prettyPrintStat(countryInfo.todayDeaths)}
@@ -134,7 +136,7 @@ function App() {
           <Table countries={tableData} />
           {/*Graph*/}
           <h3>Worldwide new {casesType}</h3>
-          <LineGraph casesType={casesType} />
+          <LineGraph className="app__graph" casesType={casesType} />
         </CardContent>
       </Card>
     </div>
